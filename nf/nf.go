@@ -36,7 +36,8 @@ func RequestIP(requrl string, ip string) string {
 		Proxy:           http.ProxyURL(proxy),
 	}
 
-	newrequrl := strings.Replace(requrl, host, ip, 1)
+	// newrequrl := strings.Replace(requrl, host, ip, 1)
+	newrequrl := requrl
 	client := &http.Client{
 		Transport:     netTransport,
 		CheckRedirect: func(req *http.Request, via []*http.Request) error { return http.ErrUseLastResponse },
@@ -48,7 +49,7 @@ func RequestIP(requrl string, ip string) string {
 		return "Error"
 	}
 	req.Host = host
-	req.Header.Set("USER-AGENT", "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36")
+	req.Header.Set("USER-AGENT", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.102 Safari/537.36 Edg/98.0.1108.56")
 	resp, err := client.Do(req)
 	if err != nil {
 		//return errors.New(strings.ReplaceAll(err.Error(), newrequrl, requrl))
@@ -111,6 +112,7 @@ func FindCountry(Code string) string {
 func NF(url string) (bool, string) {
 	proxyUrl = url
 	var ipv4 string
+	var ipv4s []string
 
 	var areaAvailableID = 80018499
 	var SelfMadeAvailableID = 80197526
@@ -131,11 +133,12 @@ func NF(url string) (bool, string) {
 	case len(ns) != 0:
 		for _, n := range ns {
 			if ParseIP(n) == 4 {
-				ipv4 = n
+				ipv4s = append(ipv4s, n)
 			}
 		}
 
 	}
+	ipv4 = ipv4s[0]
 	// 拼接非自制剧的URL
 	testURL := Netflix + strconv.Itoa(NonSelfMadeAvailableID)
 	ipv4CountryCode := RequestIP(testURL, ipv4)

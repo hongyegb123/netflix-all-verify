@@ -3,11 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/Dreamacro/clash/constant"
-	"github.com/Dreamacro/clash/hub/executor"
-	"github.com/Dreamacro/clash/listener/http"
-	"github.com/axgle/mahonia" //编码转换
-	"github.com/xuri/excelize/v2"
 	"io"
 	"io/ioutil"
 	"net"
@@ -18,6 +13,12 @@ import (
 	"path/filepath"
 	"strconv"
 	"time"
+
+	"github.com/Dreamacro/clash/constant"
+	"github.com/Dreamacro/clash/hub/executor"
+	"github.com/Dreamacro/clash/listener/http"
+	"github.com/axgle/mahonia" //编码转换
+	"github.com/xuri/excelize/v2"
 )
 
 var proxy constant.Proxy
@@ -66,16 +67,12 @@ func GetAvailablePort() (int, error) {
 }
 
 func downloadConfig() {
-	ex, err := os.Executable()
-	if err != nil {
-		panic(err)
-	}
-	exPath = filepath.Dir(ex)
+
 	fmt.Println(exPath)
 	//输入订阅链接
 	fmt.Println("请输入clash订阅链接(非clash订阅请进行订阅转换)")
 	var urlConfig string
-	_, err = fmt.Scanln(&urlConfig)
+	_, err := fmt.Scanln(&urlConfig)
 	if err != nil {
 		panic(err)
 	}
@@ -112,7 +109,15 @@ func downloadConfig() {
 }
 
 func main() {
-	downloadConfig()
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	exPath = filepath.Dir(ex)
+
+	if _, err := os.Stat(exPath + "/config.yaml"); os.IsNotExist(err) {
+		downloadConfig()
+	}
 
 	//解析配置信息
 	config, err := executor.ParseWithPath(exPath + "/config.yaml")
@@ -123,7 +128,7 @@ func main() {
 	port, _ := GetAvailablePort()
 	proxyUrl += strconv.Itoa(port)
 	//开启代理
-	in := make(chan constant.ConnContext, 100)
+	in := make(chan constant.ConnContext, 10)
 	defer close(in)
 	l, err := http.New(proxyUrl, in)
 	if err != nil {
@@ -153,10 +158,10 @@ func main() {
 
 	//创建netflix.txt
 	f, err := os.OpenFile(exPath+"/netflix.txt", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0666)
-	defer f.Close()
 	if err != nil {
 		fmt.Println("新建netflix.txt失败：", err)
 	}
+	defer f.Close()
 
 	//创建excel
 	excel := excelize.NewFile()
@@ -180,6 +185,7 @@ func main() {
 		fmt.Print(str)
 
 		//Netflix检测
+		// proxyUrl = "localhost:1081"
 		ok, out := nf.NF("http://" + proxyUrl)
 		if out == "" {
 			out = "完全不支持Netflix"
@@ -198,7 +204,7 @@ func main() {
 		index++
 	}
 
-	if err := excel.SaveAs(exPath+"/Netflix.xlsx"); err != nil {
+	if err := excel.SaveAs(exPath + "/Netflix.xlsx"); err != nil {
 		fmt.Println(err)
 	}
 }
