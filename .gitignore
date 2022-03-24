@@ -3,3 +3,6 @@
 netflix-all-verify*
 config.yaml
 netflix.txt
+*.xlsx
+config*.yaml
+**/.vscode
