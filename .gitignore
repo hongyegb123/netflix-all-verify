@@ -2,7 +2,7 @@
 **/.DS_Store
 netflix-all-verify*
 config.yaml
-netflix.txt
+netflix*.txt
 *.xlsx
 config*.yaml
 **/.vscode
