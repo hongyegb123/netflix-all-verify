@@ -5,14 +5,11 @@ go 1.18
 require (
 	github.com/Dreamacro/clash v1.10.6
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394
-	github.com/xuri/excelize/v2 v2.5.0
+	github.com/xuri/excelize/v2 v2.6.0
 )
 
 require (
 	github.com/Dreamacro/go-shadowsocks2 v0.1.8 // indirect
-	github.com/go-chi/chi/v5 v5.0.7 // indirect
-	github.com/go-chi/cors v1.2.1 // indirect
-	github.com/go-chi/render v1.0.1 // indirect
 	github.com/gofrs/uuid v4.2.0+incompatible // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/insomniacslk/dhcp v0.0.0-20220504074936-1ca156eafb9f // indirect
@@ -24,10 +21,10 @@ require (
 	github.com/richardlehane/msoleps v1.0.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/u-root/uio v0.0.0-20220204230159-dac05f7d2cb4 // indirect
-	github.com/xuri/efp v0.0.0-20220216053911-6d8731f62184 // indirect
+	github.com/xuri/efp v0.0.0-20220407160117-ad0f7a785be8 // indirect
+	github.com/xuri/nfp v0.0.0-20220409054826-5e722a1d9e22 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.uber.org/atomic v1.9.0 // indirect
-	go.uber.org/automaxprocs v1.5.1 // indirect
 	golang.org/x/crypto v0.0.0-20220507011949-2cf3adece122 // indirect
 	golang.org/x/mod v0.5.1 // indirect
 	golang.org/x/net v0.0.0-20220425223048-2871e0cb64e4 // indirect
