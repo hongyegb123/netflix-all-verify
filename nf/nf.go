@@ -116,7 +116,8 @@ func NF(url string) (bool, string) {
 
 	var areaAvailableID = 80018499
 	var SelfMadeAvailableID = 80197526
-	var NonSelfMadeAvailableID = 70143836
+	// var NonSelfMadeAvailableID = 70143836
+	var NonSelfMadeAvailableID = 70005379
 
 	dns := "www.netflix.com"
 

@@ -157,7 +157,10 @@ func main() {
 	}()
 
 	//创建netflix.txt
-	f, err := os.OpenFile(exPath+"/netflix.txt", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0666)
+	current := time.Now()
+	fmt.Println(current.Format("20060102150405"))
+	filename := "netflix-" + current.Format("20060102150405")
+	f, err := os.OpenFile(exPath+"/"+filename+".txt", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0666)
 	if err != nil {
 		fmt.Println("新建netflix.txt失败：", err)
 	}
@@ -204,7 +207,7 @@ func main() {
 		index++
 	}
 
-	if err := excel.SaveAs(exPath + "/Netflix.xlsx"); err != nil {
+	if err := excel.SaveAs(exPath + "/" + filename + ".xlsx"); err != nil {
 		fmt.Println(err)
 	}
 }
