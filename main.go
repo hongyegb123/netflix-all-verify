@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	h "net/http"
 	"net/url"
@@ -40,7 +39,7 @@ func getIP() string {
 		return ""
 	}
 	defer resp.Body.Close()
-	content, _ := ioutil.ReadAll(resp.Body)
+	content, _ := io.ReadAll(resp.Body)
 	return string(content)
 }
 
@@ -49,7 +48,7 @@ func relay(l, r net.Conn) {
 	io.Copy(r, l)
 }
 
-// 获取可用端口
+// GetAvailablePort 获取可用端口
 func GetAvailablePort() (int, error) {
 	address, err := net.ResolveTCPAddr("tcp", fmt.Sprintf("%s:0", "127.0.0.1"))
 	if err != nil {
